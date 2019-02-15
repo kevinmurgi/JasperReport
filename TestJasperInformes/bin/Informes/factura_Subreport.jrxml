@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura_Subreport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Error" uuid="a1f690a3-5977-4467-85f8-6b0bcd5b7210">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="245"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="745"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AdapterJardineria"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="CodigoPedido" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT `Jardineria`.`Productos`.`Nombre`,
+	`Jardineria`.`DetallePedidos`.`Cantidad`,
+	`Jardineria`.`DetallePedidos`.`PrecioUnidad`
+FROM `Jardineria`.`DetallePedidos`
+	INNER JOIN `Jardineria`.`Productos` ON 
+	 `Jardineria`.`DetallePedidos`.`CodigoProducto` = `Jardineria`.`Productos`.`CodigoProducto` 
+WHERE 
+	 `Jardineria`.`DetallePedidos`.`CodigoPedido` = $P{CodigoPedido}]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Productos"/>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DetallePedidos"/>
+	</field>
+	<field name="PrecioUnidad" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PrecioUnidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DetallePedidos"/>
+	</field>
+	<variable name="BrutoTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[PRODUCT($F{Cantidad},$F{PrecioUnidad})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="544e89f7-0fd1-4142-aa23-e335e3be7007"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="240" height="15" uuid="e2e6cfd7-ecf8-4cb5-8c76-d97f72d2f3fc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cacda064-ff6c-4882-bc9c-ea1b89cae4d4"/>
+				</reportElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="240" y="20" width="95" height="15" uuid="9affe78f-df58-488b-924c-d65654f3676b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32663a9f-c88c-4295-8109-2c1af5f02f33"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="335" y="19" width="120" height="15" uuid="b60a9781-6621-4a01-8514-754d846669f6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f9c5b9a-6230-4346-9a1b-17625d9fc29c"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[PrecioUnitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="455" y="20" width="100" height="15" uuid="4ac6a457-4522-4429-8382-d8ccf98ac2f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f9c5b9a-6230-4346-9a1b-17625d9fc29c"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="cb229859-ab9a-4aa3-afa2-84439642f4ee"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<frame>
+				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="0" y="-1" width="555" height="15" isPrintWhenDetailOverflows="true" forecolor="#B89F7D" backcolor="#62C8F0" uuid="0127039d-df55-4271-a416-1af2c9c5ec73">
+					<printWhenExpression><![CDATA[EQUALS(FALSE( ),ISODD($V{REPORT_COUNT} ))]]></printWhenExpression>
+				</reportElement>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="0" height="0" uuid="61c830cc-6278-4c86-948e-1d56d375dd32">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cacda064-ff6c-4882-bc9c-ea1b89cae4d4"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement style="Detail" x="240" y="0" width="95" height="15" uuid="5dbb14af-de4d-4f54-86d2-6b0ade0743ef">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32663a9f-c88c-4295-8109-2c1af5f02f33"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" positionType="Float" x="0" y="0" width="240" height="15" uuid="4ab8c1e6-72cf-4fc6-a987-a03d52914a36">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cacda064-ff6c-4882-bc9c-ea1b89cae4d4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="335" y="0" width="120" height="15" uuid="6f050930-88d7-4c50-b9ec-283bb4ed3d6f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f9c5b9a-6230-4346-9a1b-17625d9fc29c"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{PrecioUnidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="455" y="0" width="100" height="15" uuid="2e846386-d4a3-4ff0-a450-26e898c1b703"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[PRODUCT($F{Cantidad},$F{PrecioUnidad})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="3" uuid="401e0e59-de38-4dd2-8257-418cb489177c"/>
+				<graphicElement>
+					<pen lineWidth="3.5" lineStyle="Double" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="80">
+			<textField pattern="#,##0.00#">
+				<reportElement x="481" y="10" width="74" height="20" uuid="dd70b4f4-4819-4822-94e9-53680eaa1915"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{BrutoTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="421" y="10" width="60" height="20" uuid="69a3ac10-4c6d-4f45-bdd8-4fed042390c7"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="30" width="60" height="20" uuid="e9a99510-7cb7-43d3-87aa-8004827f0005"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="50" width="60" height="20" uuid="99a9f869-3e8e-46f2-8f56-831c9e04564e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#">
+				<reportElement x="481" y="30" width="74" height="20" uuid="da667b18-af67-4006-b8c5-9d32440412be"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[PRODUCT($V{BrutoTotal},0.21)]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="481" y="50" width="74" height="20" uuid="7981734e-e20b-406f-8df9-fc006ed1a8d1"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[SUM($V{BrutoTotal},PRODUCT($V{BrutoTotal},0.21))]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
